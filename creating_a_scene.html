@@ -20,13 +20,21 @@
 			document.body.appendChild( renderer.domElement );
 
 			camera.position.z = 5;
+			camera.position.y = 5;
+			camera.lookAt(new THREE.Vector3(0,0,0));
 
 			var geometry = new THREE.BoxGeometry( 1, 1, 1 ); 
-			var material = new THREE.MeshLambertMaterial({ color: 'red' });
+			var material = new THREE.MeshLambertMaterial({ color: 'white' });
 			var cube = new THREE.Mesh( geometry, material ); 
 			scene.add( cube ); 
 
-			var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+			var plane = new THREE.PlaneGeometry(300, 300);
+			var groundMaterial = new THREE.MeshLambertMaterial({ color: 'lightgray' });
+			var ground = new THREE.Mesh(plane, groundMaterial);
+			ground.rotation.x = -90 * Math.PI / 180;
+			scene.add(ground);
+
+			var light = new THREE.AmbientLight( "gray", 0.1 );
 			scene.add( light );
 
 			var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -37,8 +45,8 @@
 				requestAnimationFrame( render ); 
 				renderer.render( scene, camera );
 
-				cube.rotation.x += 0.1; 
-				cube.rotation.y += 0.1;
+				// cube.rotation.x += 0.1; 
+				cube.rotation.y += 0.005;
 			} render();
 		</script>
 </body>
